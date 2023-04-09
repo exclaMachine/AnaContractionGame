@@ -1,6 +1,6 @@
 import { getInputDirection } from "./input.js";
 
-export const SNAKE_SPEED = 3;
+export const SNAKE_SPEED = 5;
 const snakeBody = [{ x: 11, y: 11 }];
 let newSegments = 0;
 
@@ -35,14 +35,14 @@ export function onSnake(position) {
   });
 }
 
-let equalPositions = (pos1, pos2) => {
-  return pos1.x == pos2.x && pos1.y === pos2.y;
-};
+function equalPositions(pos1, pos2) {
+  return pos1.x === pos2.x && pos1.y === pos2.y;
+}
 
-let addSegments = () => {
+function addSegments() {
   for (let i = 0; i < newSegments; i++) {
-    snakeBody.push({ ...snakeBody[(snakeBody.length = 1)] });
+    snakeBody.push({ ...snakeBody[snakeBody.length - 1] });
   }
 
   newSegments = 0;
-};
+}
