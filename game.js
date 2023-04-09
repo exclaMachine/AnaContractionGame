@@ -25,5 +25,6 @@ export function update() {
 }
 
 export function draw() {
+  gameBoard.innerHTML = "";
   drawSnake(gameBoard);
 }
