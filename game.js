@@ -15,9 +15,11 @@ const gameBoard = document.getElementById("game-board");
 let gameOver = false;
 
 function main(currentTime) {
-  checkDeath();
   if (gameOver) {
-    return alert("You lose");
+    if (confirm("You lost. Press ok to restart.")) {
+      window.location = "/";
+    }
+    return;
   }
 
   window.requestAnimationFrame(main);
@@ -35,6 +37,7 @@ window.requestAnimationFrame(main);
 export function update() {
   updateSnake();
   updateFood();
+  checkDeath();
 }
 
 export function draw() {

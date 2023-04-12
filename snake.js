@@ -29,11 +29,18 @@ export function expandSnake(amount) {
   newSegments += amount;
 }
 
-export function onSnake(position, { ignoreHead = false } = {}) {
-  return snakeBody.some((segment, index) => {
-    if (ignoreHead && index == 0) return false;
-    return equalPositions(segment, position);
-  });
+export function onSnake(positionArray, { ignoreHead = false } = {}) {
+  for (let i = 0; i < positionArray.length - 1; i++) {
+    return snakeBody.some((segment, index) => {
+      if (ignoreHead && index == 0) return false;
+      let isSnakeAndFoodSame = equalPositions(segment, positionArray[i]);
+      if (isSnakeAndFoodSame) {
+        positionArray.splice(i, 1);
+        return isSnakeAndFoodSame;
+      }
+    });
+  }
+  return false;
 }
 
 export function getSnakeHead() {
@@ -41,7 +48,7 @@ export function getSnakeHead() {
 }
 
 export function snakeIntersection() {
-  return onSnake(snakeBody[0], { ignoreHead: true });
+  return onSnake([snakeBody[0]], { ignoreHead: true });
 }
 
 function equalPositions(pos1, pos2) {
