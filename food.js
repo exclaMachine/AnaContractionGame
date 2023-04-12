@@ -2,14 +2,14 @@ import { onSnake, expandSnake } from "./snake.js";
 import { randomGridPosition } from "./grid.js";
 import { contractions } from "./contractions.js";
 
-let firstWord = getRandomProperty(contractions);
-let isFirstWord = true;
+let selectedContraction = getRandomProperty(contractions);
+let isselectedContraction = true;
 let food = getRandomFoodPosition();
 const EXPANSION_RATE = 5;
 
 let foodElementText =
-  contractions[firstWord][
-    Math.floor(Math.random() * contractions[firstWord].length)
+  contractions[selectedContraction][
+    Math.floor(Math.random() * contractions[selectedContraction].length)
   ];
 
 foodElementText = foodElementText.split(" ")[0];
@@ -22,8 +22,8 @@ export function updateFood() {
   }
 }
 
-export function changeFirstWord(word) {
-  firstWord = getRandomProperty(contractions);
+export function changeSelectedContraction(word) {
+  selectedContraction = getRandomProperty(contractions);
 }
 
 // Utility function to get a random property from an object
@@ -38,7 +38,7 @@ export function drawFood(gameBoard) {
     foodElement.style.gridRowStart = position.y;
     foodElement.style.gridColumnStart = position.x;
     foodElement.classList.add("food");
-    foodElement.id = firstWord;
+    foodElement.id = selectedContraction;
     foodElement.innerHTML = foodElementText;
     gameBoard.appendChild(foodElement);
   });
@@ -51,7 +51,7 @@ function getRandomFoodPosition() {
     newFoodPosition = randomGridPosition();
     newFoodPositionsArray.push(newFoodPosition);
   }
-  if (isFirstWord == true) return newFoodPositionsArray;
+  if (isselectedContraction == true) return newFoodPositionsArray;
   while (onSnake(newFoodPositionsArray) || newFoodPositionsArray.length < 4) {
     newFoodPosition = randomGridPosition();
     newFoodPositionsArray.push(newFoodPosition);
