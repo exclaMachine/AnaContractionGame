@@ -29,7 +29,7 @@ export function expandSnake(amount) {
   newSegments += amount;
 }
 
-export function onSnake(positionArray, { ignoreHead = false } = {}) {
+export function onSnakeForArray(positionArray, { ignoreHead = false } = {}) {
   for (let i = 0; i < positionArray.length - 1; i++) {
     return snakeBody.some((segment, index) => {
       if (ignoreHead && index == 0) return false;
@@ -43,12 +43,19 @@ export function onSnake(positionArray, { ignoreHead = false } = {}) {
   return false;
 }
 
+export function onSnake(position, { ignoreHead = false } = {}) {
+  return snakeBody.some((segment, index) => {
+    if (ignoreHead && index === 0) return false;
+    return equalPositions(segment, position);
+  });
+}
+
 export function getSnakeHead() {
   return snakeBody[0];
 }
 
 export function snakeIntersection() {
-  return onSnake([snakeBody[0]], { ignoreHead: true });
+  return onSnake(snakeBody[0], { ignoreHead: true });
 }
 
 function equalPositions(pos1, pos2) {

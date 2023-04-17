@@ -7,18 +7,12 @@ let isselectedContraction = true;
 let food = getRandomFoodPosition();
 const EXPANSION_RATE = 5;
 
-let foodElementText =
-  contractions[selectedContraction][
-    Math.floor(Math.random() * contractions[selectedContraction].length)
-  ];
-
-foodElementText = foodElementText.split(" ")[0];
-
 export function updateFood() {
   if (onSnake(food)) {
     expandSnake(EXPANSION_RATE);
 
     food = getRandomFoodPosition();
+    selectedContraction = getRandomProperty(contractions);
   }
 }
 
@@ -33,18 +27,26 @@ function getRandomProperty(obj) {
 }
 
 export function drawFood(gameBoard) {
-  food.forEach((position) => {
-    const foodElement = document.createElement("div");
-    foodElement.style.gridRowStart = position.y;
-    foodElement.style.gridColumnStart = position.x;
-    foodElement.classList.add("food");
-    foodElement.id = selectedContraction;
-    foodElement.innerHTML = foodElementText;
-    gameBoard.appendChild(foodElement);
-  });
+  //food.forEach((position) => {
+  const foodElement = document.createElement("div");
+  foodElement.style.gridRowStart = food.y;
+  foodElement.style.gridColumnStart = food.x;
+  foodElement.classList.add("food");
+  foodElement.id = selectedContraction;
+
+  let foodElementText =
+    contractions[selectedContraction][
+      Math.floor(Math.random() * contractions[selectedContraction].length)
+    ];
+
+  foodElementText = foodElementText.split(" ")[0];
+
+  foodElement.innerHTML = foodElementText;
+  gameBoard.appendChild(foodElement);
+  //});
 }
 
-function getRandomFoodPosition() {
+function getRandomFoodPositionFromArray() {
   let newFoodPosition;
   let newFoodPositionsArray = [];
   while (newFoodPosition == null || onSnake(newFoodPositionsArray)) {
@@ -58,4 +60,12 @@ function getRandomFoodPosition() {
   }
   return newFoodPositionsArray;
   //return newFoodPosition;
+}
+
+function getRandomFoodPosition() {
+  let newFoodPosition;
+  while (newFoodPosition == null || onSnake(newFoodPosition)) {
+    newFoodPosition = randomGridPosition();
+  }
+  return newFoodPosition;
 }
