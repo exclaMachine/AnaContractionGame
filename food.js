@@ -26,6 +26,20 @@ function getRandomProperty(obj) {
   return keys[Math.floor(Math.random() * keys.length)];
 }
 
+function getRandomSecondWord() {
+  const randomProperty = getRandomProperty(contractions);
+  const secondWords = contractions[randomProperty].map(
+    (words) => words.split(" ")[1]
+  );
+  const randomIndex = Math.floor(Math.random() * secondWords.length);
+  const randomSecondWord = secondWords[randomIndex];
+
+  const element = document.createElement("div");
+  element.innerText = randomSecondWord;
+
+  return element;
+}
+
 export function drawFood(gameBoard) {
   //food.forEach((position) => {
   const foodElement = document.createElement("div");
